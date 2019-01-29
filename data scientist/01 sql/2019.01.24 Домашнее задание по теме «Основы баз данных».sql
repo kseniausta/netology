@@ -164,3 +164,4 @@ FROM person2content pc
    JOIN persons p
     ON pc.person_id = p.id
 ORDER BY p.name, f.name
+;
