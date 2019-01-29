@@ -155,9 +155,10 @@ INSERT INTO person2content VALUES
   (57, 5, 'монтаж')
 ;
 
+-- тест вывода
 SELECT p.name, pc.person_role, 
        f.name, f.country, 
-       f.fees, date_part('year', f.release_year)
+       f.fees, date_part('year', f.release_year) release_year
 FROM person2content pc
    JOIN films f
     ON pc.content_id = f.id
