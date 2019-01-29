@@ -15,13 +15,13 @@ CREATE TABLE person2content (
   person_id SERIAL,
   content_id SERIAL,
   person_role VARCHAR (60),
-  PRIMARY KEY (person_id, content_id, person_role)
+  PRIMARY KEY (person_id, content_id, person_role),
   FOREIGN KEY (person_id) REFERENCES persons(id),
   FOREIGN KEY (content_id) REFERENCES films(id)
 );
  
 INSERT INTO films VALUES 
-  (1, 'Отличница лёгкого поведения', 'США', 74952305, to_timestamp('2010', 'YY'),
+  (1, 'Отличница лёгкого поведения', 'США', 74952305, to_timestamp('2010', 'YY')),
   (2, 'Дьявол носит Prada', 'США, Франция', 326260148, to_timestamp('2006', 'YY')),
   (3, 'Ван Хельсинг', 'США, Чехия', 300157638, to_timestamp('2004', 'YY')),
   (4, 'Дэдпул', 'США', 783112979, to_timestamp('2016', 'YY')),                                                       
