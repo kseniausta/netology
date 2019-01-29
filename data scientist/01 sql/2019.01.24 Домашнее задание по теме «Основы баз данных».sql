@@ -20,15 +20,15 @@ CREATE TABLE person2content (
   FOREIGN KEY (content_id) REFERENCES films(id)
 );
  
-INSERT INTO films VALUES (
+INSERT INTO films VALUES 
   (1, 'Отличница лёгкого поведения', 'США', 74952305, to_timestamp('2010', 'YY'),
   (2, 'Дьявол носит Prada', 'США, Франция', 326260148, to_timestamp('2006', 'YY')),
   (3, 'Ван Хельсинг', 'США, Чехия', 300157638, to_timestamp('2004', 'YY')),
   (4, 'Дэдпул', 'США', 783112979, to_timestamp('2016', 'YY')),                                                       
   (5, 'Зеленая миля', 'США', 286801374, to_timestamp('1999', 'YY'))  
-);
+;
 
-INSERT INTO persons VALUES (
+INSERT INTO persons VALUES 
   (1, 'Уилл Глак'),
   (2, 'Берт В. Ройал'),
   (3, 'Зэнн Дивайн'),
@@ -87,9 +87,9 @@ INSERT INTO persons VALUES (
   (55, 'Уильям Крус'),
   (56, 'Керин Вагнер'),
   (57, 'Ричард Фрэнсис-Брюс')
-);
+;
   
-INSERT INTO person2content VALUES (
+INSERT INTO person2content VALUES 
   (1, 1, 'режиссер'),
   (2, 1, 'сценарист'),
   (3, 1, 'продюсер'),
@@ -153,7 +153,7 @@ INSERT INTO person2content VALUES (
   (55, 5, 'художник'),
   (56, 5, 'художник'),
   (57, 5, 'монтаж')
-);
+;
 
 SELECT p.name, pc.person_role, 
        f.name, f.country, 
