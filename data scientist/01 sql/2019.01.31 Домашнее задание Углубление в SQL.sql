@@ -1,25 +1,26 @@
-SELECT 'ФИО: Уставщикова Ксения Сергеевна' as name;
+psql -U postgres -c "SELECT 'ФИО: Уставщикова Ксения Сергеевна' as name;";
 
 -- Оконные функции.
 
+psql -U postgres -c "
 SELECT userid, movieid, 
 (rating - MIN(rating) OVER (PARTITION BY userid))/(MAX(rating) OVER (PARTITION BY userid) - MIN(rating) OVER (PARTITION BY userid)) normed_rating, 
 AVG(rating) OVER (PARTITION BY userid) avg_rating
 FROM ratings r
 LIMIT 30
-;
+;";
 
-                                                                                                              
-psql -U postgres -c "DROP TABLE keywords;";
-psql -U postgres -c "DROP TABLE top_rated_tags;";
+-- ETL
+--psql -U postgres -c "DROP TABLE keywords;";
+--psql -U postgres -c "DROP TABLE top_rated_tags;";
 
 psql -U postgres -c "
 CREATE TABLE IF NOT EXISTS keywords (
 id bigint,
 tags text
-);"
+);";
 
-psql -U postgres -c "\\copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' DELIMITER as ',' CSV HEADER"
+psql -U postgres -c "\\copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' DELIMITER as ',' CSV HEADER";
 
 --
 psql -U postgres -c "
@@ -32,7 +33,7 @@ LIMIT 150)
 SELECT tr.movieId, k.tags INTO top_rated_tags
 FROM keywords k, top_rated tr
 WHERE k.id = tr.movieId
-;"
+;";
 
 psql -U postgres -c "\\copy (SELECT * FROM top_rated_tags) TO 'ust_top_rated_tags.csv' WITH CSV HEADER DELIMITER as E'\t'";
 
