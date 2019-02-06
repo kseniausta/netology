@@ -11,18 +11,21 @@ LIMIT 30
 ;";
 
 -- ETL
+-- удаление таблиц
 --psql -U postgres -c "DROP TABLE keywords;";
 --psql -U postgres -c "DROP TABLE top_rated_tags;";
 
+--"ВАША КОМАНДА СОЗДАНИЯ ТАБЛИЦЫ"
 psql -U postgres -c "
 CREATE TABLE IF NOT EXISTS keywords (
 id bigint,
 tags text
 );";
 
+--"ВАША КОМАНДА ЗАЛИВКИ ДАННЫХ В ТАБЛИЦу"
 psql -U postgres -c "\\copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' DELIMITER as ',' CSV HEADER";
 
---
+--"ЗАПРОС3"
 psql -U postgres -c "
 WITH top_rated as (SELECT movieId, AVG(rating) avg_rating
 FROM ratings
@@ -35,5 +38,6 @@ FROM keywords k, top_rated tr
 WHERE k.id = tr.movieId
 ;";
 
+--"ВАША КОМАНДА ВЫГРУЗКИ ТАБЛИЦЫ В ФАЙЛ"
 psql -U postgres -c "\\copy (SELECT * FROM top_rated_tags) TO 'ust_top_rated_tags.csv' WITH CSV HEADER DELIMITER as E'\t'";
 
