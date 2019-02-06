@@ -10,3 +10,29 @@ LIMIT 30
 ;
 
                                                                                                               
+psql -U postgres -c "DROP TABLE keywords;";
+psql -U postgres -c "DROP TABLE top_rated_tags;";
+
+psql -U postgres -c "
+CREATE TABLE IF NOT EXISTS keywords (
+id bigint,
+tags text
+);"
+
+psql -U postgres -c "\\copy keywords FROM '/usr/local/share/netology/raw_data/keywords.csv' DELIMITER as ',' CSV HEADER"
+
+--
+psql -U postgres -c "
+WITH top_rated as (SELECT movieId, AVG(rating) avg_rating
+FROM ratings
+GROUP BY movieId
+HAVING COUNT(DISTINCT userId) > 50
+ORDER BY avg_rating DESC, movieId ASC
+LIMIT 150) 
+SELECT tr.movieId, k.tags INTO top_rated_tags
+FROM keywords k, top_rated tr
+WHERE k.id = tr.movieId
+;"
+
+psql -U postgres -c "\\copy (SELECT * FROM top_rated_tags) TO 'ust_top_rated_tags.csv' WITH CSV HEADER DELIMITER as E'\t'";
+
