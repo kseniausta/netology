@@ -1,9 +1,7 @@
 drop table if exists CUSTOMER;
-drop table if exists DEPARTMENT;
 drop table if exists EMPLOYEE;
 drop table if exists ITEM;
 drop table if exists JOB;
-drop table if exists LOCATION;
 drop table if exists PRICE;
 drop table if exists PRODUCT;
 drop table if exists SALARY_GRADE;
@@ -24,43 +22,6 @@ insert into job values(       671 ,'MANAGER');
 insert into job values(       672 ,'PRESIDENT');
 
 
-CREATE TABLE LOCATION(
-LOCATION_ID BIGSERIAL NOT NULL, 
-REGION_CITY VARCHAR(20) NULL,  
-PRIMARY KEY (LOCATION_ID)
-);
-
-insert into LOCATION values(         122 ,'NEW YORK');
-insert into LOCATION values(         124 ,'DALLAS');
-insert into LOCATION values(         123 ,'CHICAGO');
-insert into LOCATION values(         167 ,'BOSTON');
-insert into LOCATION values(         168 ,'MOSCOW');
-insert into LOCATION values(         169 ,'KIEV');
-
-
-CREATE TABLE DEPARTMENT(
-DEPARTMENT_ID BIGSERIAL NOT NULL, 
-NAME VARCHAR(14) NULL, 
-LOCATION_ID BIGSERIAL NOT NULL, 
-PRIMARY KEY (DEPARTMENT_ID),  
-FOREIGN KEY (LOCATION_ID) REFERENCES LOCATION(LOCATION_ID)
-);
-
-insert into department values(            10 ,'ACCOUNTING',             122 );
-insert into department values(            20 ,'RESEARCH',               124 );
-insert into department values(            30 ,'SALES',                  123 );
-insert into department values(            40 ,'OPERATIONS',             167 );
-insert into department values(            12 ,'RESEARCH',               122 );
-insert into department values(            13 ,'SALES',                  122 );
-insert into department values(            14 ,'OPERATIONS',             122 );
-insert into department values(            23 ,'SALES',                  124 );
-insert into department values(            24 ,'OPERATIONS',             124 );
-insert into department values(            34 ,'OPERATIONS',             123 );
-insert into department values(            43 ,'SALES',                  167 );
-insert into department values(            55 ,'SALES',                  168 );
-insert into department values(            56 ,'OPERATIONS',             168 );
-
-
 CREATE TABLE EMPLOYEE(
 EMPLOYEE_ID BIGSERIAL NOT NULL, 
 LAST_NAME VARCHAR(15) NULL, 
@@ -71,45 +32,43 @@ MANAGER_ID BIGSERIAL NOT NULL,
 HIRE_DATE DATE NULL, 
 SALARY MONEY NULL, 
 COMMISSION MONEY NULL, 
-DEPARTMENT_ID BIGSERIAL NOT NULL,  
 PRIMARY KEY (EMPLOYEE_ID),  
 FOREIGN KEY (JOB_ID) REFERENCES JOB(JOB_ID),  
-FOREIGN KEY (MANAGER_ID) REFERENCES EMPLOYEE(EMPLOYEE_ID),  
-FOREIGN KEY (DEPARTMENT_ID) REFERENCES DEPARTMENT(DEPARTMENT_ID)
+FOREIGN KEY (MANAGER_ID) REFERENCES EMPLOYEE(EMPLOYEE_ID)
 );
 
-insert into employee values(7839,'KING',   'FRANCIS', 'A',672,7839,'17-NOV-1985',5000,NULL,10);
-insert into employee values(7505,'DOYLE',  'JEAN',    'K',671,7839,'04-APR-1985',2850,NULL,13);
-insert into employee values(7555,'PETERS', 'DANIEL',  'T',670,7505,'31-MAR-1985',1250,300, 13);
-insert into employee values(7557,'SHAW',   'KAREN',   'P',670,7505,'02-APR-1985',1250,1200,13);
-insert into employee values(7600,'PORTER', 'RAYMOND', 'Y',670,7505,'15-APR-1985',1250,900, 13);
-insert into employee values(7820,'ROSS',   'PAUL',    'S',670,7505,'01-JUN-1985',1300,800, 13);
-insert into employee values(7950,'JENSEN', 'ALICE',   'B',667,7505,'15-JAN-1987', 750,NULL,13);
-insert into employee values(7506,'DENNIS', 'LYNN',    'S',671,7839,'15-MAY-1985',2750,NULL,23);
-insert into employee values(7560,'DUNCAN', 'SARAH',   'S',670,7506,'31-MAY-1985',1250,NULL,23);
-insert into employee values(7564,'LANGE',  'GREGORY', 'J',670,7506,'01-JUN-1985',1250,300, 23);
-insert into employee values(7789,'WEST',   'LIVIA',   'N',670,7506,'04-APR-1985',1500,1000,23);
-insert into employee values(7954,'MURRAY', 'JAMES',   'T',667,7506,'16-JAN-1987', 750,NULL,23);
-insert into employee values(7507,'BAKER',  'LESLIE',  'D',671,7839,'10-JUN-1985',2200,NULL,14);
-insert into employee values(7609,'LEWIS',  'RICHARD', 'M',668,7507,'16-APR-1985',1800,NULL,14);
-insert into employee values(7676,'SOMMERS','DENISE',  'D',668,7507,'19-APR-1985',1850,NULL,14);
-insert into employee values(7566,'JONES',  'TERRY',   'M',671,7839,'02-APR-1985',2975,NULL,20);
-insert into employee values(7788,'SCOTT',  'DONALD',  'T',669,7566,'09-DEC-1986',3000,NULL,20);
-insert into employee values(7876,'ADAMS',  'DIANE',   'G',667,7788,'12-JAN-1987',1100,NULL,20);
-insert into employee values(7902,'FORD',   'JENNIFER','D',669,7566,'03-DEC-1985',3000,NULL,20);
-insert into employee values(7369,'SMITH',  'JOHN',    'Q',667,7902,'17-DEC-1984', 800,NULL,20);
-insert into employee values(7569,'ALBERTS','CHRIS',   'L',671,7839,'06-APR-1985',3000,NULL,12);
-insert into employee values(7799,'FISHER', 'MATTHEW', 'G',669,7569,'12-DEC-1986',3000,NULL,12);
-insert into employee values(7919,'DOUGLAS','MICHAEL', 'A',667,7799,'04-JAN-1987', 800,NULL,12);
-insert into employee values(7916,'ROBERTS','GRACE',   'M',669,7569,'04-JAN-1987',2875,NULL,12);
-insert into employee values(7698,'BLAKE',  'MARION',  'S',671,7839,'01-MAY-1985',2850,NULL,30);
-insert into employee values(7499,'ALLEN',  'KEVIN',   'J',670,7698,'20-FEB-1985',1600,300, 30);
-insert into employee values(7521,'WARD',   'CYNTHIA', 'D',670,7698,'22-FEB-1985',1250,500, 30);
-insert into employee values(7654,'MARTIN', 'KENNETH', 'J',670,7698,'28-SEP-1985',1250,1400,30);
-insert into employee values(7844,'TURNER', 'MARY',    'A',670,7698,'08-SEP-1985',1500,NULL,30);
-insert into employee values(7900,'JAMES',  'FRED',    'S',667,7698,'03-DEC-1985', 950,NULL,30);
-insert into employee values(7782,'CLARK',  'CAROL',   'F',671,7839,'09-JUN-1985',2450,NULL,10);
-insert into employee values(7934,'MILLER', 'BARBARA', 'M',667,7782,'23-JAN-1986',1300,NULL,10);
+insert into employee values(7839,'KING',   'FRANCIS', 'A',672,7839,'17-NOV-1985',5000,NULL);
+insert into employee values(7505,'DOYLE',  'JEAN',    'K',671,7839,'04-APR-1985',2850,NULL);
+insert into employee values(7555,'PETERS', 'DANIEL',  'T',670,7505,'31-MAR-1985',1250,300 );
+insert into employee values(7557,'SHAW',   'KAREN',   'P',670,7505,'02-APR-1985',1250,1200);
+insert into employee values(7600,'PORTER', 'RAYMOND', 'Y',670,7505,'15-APR-1985',1250,900 );
+insert into employee values(7820,'ROSS',   'PAUL',    'S',670,7505,'01-JUN-1985',1300,800 );
+insert into employee values(7950,'JENSEN', 'ALICE',   'B',667,7505,'15-JAN-1987', 750,NULL);
+insert into employee values(7506,'DENNIS', 'LYNN',    'S',671,7839,'15-MAY-1985',2750,NULL);
+insert into employee values(7560,'DUNCAN', 'SARAH',   'S',670,7506,'31-MAY-1985',1250,NULL);
+insert into employee values(7564,'LANGE',  'GREGORY', 'J',670,7506,'01-JUN-1985',1250,300 );
+insert into employee values(7789,'WEST',   'LIVIA',   'N',670,7506,'04-APR-1985',1500,1000);
+insert into employee values(7954,'MURRAY', 'JAMES',   'T',667,7506,'16-JAN-1987', 750,NULL);
+insert into employee values(7507,'BAKER',  'LESLIE',  'D',671,7839,'10-JUN-1985',2200,NULL);
+insert into employee values(7609,'LEWIS',  'RICHARD', 'M',668,7507,'16-APR-1985',1800,NULL);
+insert into employee values(7676,'SOMMERS','DENISE',  'D',668,7507,'19-APR-1985',1850,NULL);
+insert into employee values(7566,'JONES',  'TERRY',   'M',671,7839,'02-APR-1985',2975,NULL);
+insert into employee values(7788,'SCOTT',  'DONALD',  'T',669,7566,'09-DEC-1986',3000,NULL);
+insert into employee values(7876,'ADAMS',  'DIANE',   'G',667,7788,'12-JAN-1987',1100,NULL);
+insert into employee values(7902,'FORD',   'JENNIFER','D',669,7566,'03-DEC-1985',3000,NULL);
+insert into employee values(7369,'SMITH',  'JOHN',    'Q',667,7902,'17-DEC-1984', 800,NULL);
+insert into employee values(7569,'ALBERTS','CHRIS',   'L',671,7839,'06-APR-1985',3000,NULL);
+insert into employee values(7799,'FISHER', 'MATTHEW', 'G',669,7569,'12-DEC-1986',3000,NULL);
+insert into employee values(7919,'DOUGLAS','MICHAEL', 'A',667,7799,'04-JAN-1987', 800,NULL);
+insert into employee values(7916,'ROBERTS','GRACE',   'M',669,7569,'04-JAN-1987',2875,NULL);
+insert into employee values(7698,'BLAKE',  'MARION',  'S',671,7839,'01-MAY-1985',2850,NULL);
+insert into employee values(7499,'ALLEN',  'KEVIN',   'J',670,7698,'20-FEB-1985',1600,300 );
+insert into employee values(7521,'WARD',   'CYNTHIA', 'D',670,7698,'22-FEB-1985',1250,500 );
+insert into employee values(7654,'MARTIN', 'KENNETH', 'J',670,7698,'28-SEP-1985',1250,1400);
+insert into employee values(7844,'TURNER', 'MARY',    'A',670,7698,'08-SEP-1985',1500,NULL);
+insert into employee values(7900,'JAMES',  'FRED',    'S',667,7698,'03-DEC-1985', 950,NULL);
+insert into employee values(7782,'CLARK',  'CAROL',   'F',671,7839,'09-JUN-1985',2450,NULL);
+insert into employee values(7934,'MILLER', 'BARBARA', 'M',667,7782,'23-JAN-1986',1300,NULL);
 
 
 CREATE TABLE CUSTOMER(
