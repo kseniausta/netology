@@ -1,3 +1,4 @@
+-- https://www.db-fiddle.com/
 drop table if exists CUSTOMER;
 drop table if exists EMPLOYEE;
 drop table if exists ITEM;
