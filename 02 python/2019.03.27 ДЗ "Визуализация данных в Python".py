@@ -1,16 +1,13 @@
-import numpy as np
-import math
+# датасет ml-latest-small скачан с http://files.grouplens.org/datasets/movielens/
 import pandas as pd
 import matplotlib.pyplot as plt
 from pylab import rcParams
-from datetime import datetime
-from datetime import time
 from pandas.plotting import lag_plot
 from matplotlib.pyplot import figure
 
-movies = pd.read_csv('ml-latest-small/movies.csv')
-ratings = pd.read_csv('ml-latest-small/ratings.csv')
-tags = pd.read_csv('ml-latest-small/tags.csv')
+#movies = pd.read_csv('ml-latest-small/movies.csv')
+#ratings = pd.read_csv('ml-latest-small/ratings.csv')
+#tags = pd.read_csv('ml-latest-small/tags.csv')
 #print(movies.info())
 #print(ratings.info())
 #print(tags.info())
@@ -42,7 +39,7 @@ print(ratings_filtered)'''
 оценки от "случайных поользователей". 
 Красная линия - оценки пользователей, которые поставили более ста оценок за все время.
 Зеленая линия - оценки всех пользователей.'''
-'''ratings = pd.read_csv('ml-latest-small/ratings.csv')
+ratings = pd.read_csv('ml-latest-small/ratings.csv')
 last_five_years = 1537799250 - 15*24*60*60
 ratings_filtered = ratings.groupby('userId').count()
 ratings_filtered = ratings_filtered[ratings_filtered['timestamp'] > 100]
@@ -56,7 +53,7 @@ joined = ratings_all.merge(ratings_fan, on='movieId', how='inner').sort_values('
 print(joined['rating_x'].to_list())
 plt.plot(joined['rating_x'].tail(100).to_list(), label='Оценки всех пользователей', linewidth=2, color = 'red')
 plt.plot(joined['rating_y'].tail(100).to_list(), label='Оценки киноманов', linewidth=2, color = 'green')
-plt.show()'''
+plt.show()
 
 #4. Теги из скольки слов популярны - столбцы
 '''tags = pd.read_csv('ml-latest-small/tags.csv')
@@ -68,6 +65,16 @@ for tag in tags['tag'].to_list():
 print(count_words)'''
 
 #5. Зависимость рейтинга и время выставления оценки - точками, полупрозрачными с затемнением
-'''ratings = pd.read_csv('ml-latest-small/ratings.csv')
+# Выяснить, если зависимость от оценки и времени суток , в которое ее поставили
+# Например, 1 - чаще ставят утром, 5 - вечером
+# Время по оси X - снизу вверх от 00 до 00 часов
+ratings = pd.read_csv('ml-latest-small/ratings.csv')
+print(type(ratings))
 ratings['time'] = ratings['timestamp'] % (24*60*60)
-print(ratings[['rating', 'time']])'''
+print(type(ratings))
+ratings = ratings[['rating', 'time']]
+print(type(ratings[['rating', 'time']]))
+#print(ratings[['rating', 'time']])
+plt.figure(figsize=(6*3.13,4*3.13)) # эта строка не увеличивает окно, она открывает второе большое. как увеличить мое?
+ratings.plot.scatter(x='rating', y='time', c='DarkBlue', alpha=.2, marker='o')
+plt.show()
